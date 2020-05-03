@@ -2,12 +2,13 @@ version: '3'
 services:
 
     php:
-        image: atillay/lemp-php:7.3 # Also available : atillay/lemp-php:7.2
+        #image: atillay/lemp-php:7.3 # Also available : atillay/lemp-php:7.2
+        build: ./docker/php
         env_file:
             - .env
         volumes:
             - ./docker/php/php.ini:/usr/local/etc/php/php.ini
-            - .:/var/www:cached
+            - ./public:/var/www/html:cached
 
     nginx:
         image: atillay/lemp-nginx
@@ -16,7 +17,7 @@ services:
         volumes:
             - ./docker/nginx/nginx.conf:/etc/nginx/nginx.conf
             - ./log:/var/log/nginx
-            - ./public:/var/www/public
+            - ./public:/var/www/html
 
     mysql:
         image: mysql:5.7
